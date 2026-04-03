@@ -1,0 +1,18 @@
+[Unit]
+Description=NestShift GPIO
+After=network.target mosquitto.service
+Wants=mosquitto.service
+
+[Service]
+Type=simple
+User=nestshift
+WorkingDirectory=/opt/nestshift/services/gpio
+ExecStart=/opt/nestshift/venv/bin/python main.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,190 @@
+version: '3.8'
+
+networks:
+  nestshift-dev:
+    driver: bridge
+
+volumes:
+  influxdb-data:
+  mosquitto-data:
+  nodered-data:
+
+services:
+
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: nestshift-mosquitto
+    networks: [nestshift-dev]
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ../services/mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mosquitto-data:/mosquitto/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mosquitto_pub", "-h", "localhost", "-t", "health", "-m", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  influxdb:
+    image: influxdb:2.7
+    container_name: nestshift-influxdb
+    networks: [nestshift-dev]
+    ports:
+      - "8086:8086"
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_ADMIN_USER:-nestshift}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_ADMIN_PASSWORD:-changeme}
+      - DOCKER_INFLUXDB_INIT_ORG=nestshift
+      - DOCKER_INFLUXDB_INIT_BUCKET=nestshift
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
+      - ./services/influxdb/init.sh:/docker-entrypoint-initdb.d/init.sh
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8086/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  nestshift-api:
+    build:
+      context: ../services/api
+      dockerfile: Dockerfile
+    container_name: nestshift-api
+    networks: [nestshift-dev]
+    ports:
+      - "8000:8000"
+    environment:
+      - MQTT_HOST=mosquitto
+      - MQTT_PORT=1883
+      - INFLUXDB_URL=http://influxdb:8086
+      - DATABASE_PATH=/app/database/nestshift.db
+    volumes:
+      - ../database:/app/database
+    depends_on:
+      - mosquitto
+      - influxdb
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  nestshift-brain:
+    build:
+      context: ../services/brain
+      dockerfile: Dockerfile
+    container_name: nestshift-brain
+    networks: [nestshift-dev]
+    ports:
+      - "8001:8001"
+    environment:
+      - MQTT_HOST=mosquitto
+      - MQTT_PORT=1883
+      - API_URL=http://nestshift-api:8000
+    depends_on:
+      - mosquitto
+      - nestshift-api
+    restart: unless-stopped
+
+  nestshift-gpio:
+    build:
+      context: ../services/gpio
+      dockerfile: Dockerfile
+    container_name: nestshift-gpio
+    networks: [nestshift-dev]
+    environment:
+      - MQTT_HOST=mosquitto
+      - MQTT_PORT=1883
+      - GPIO_MOCK=true
+    depends_on:
+      - mosquitto
+    restart: unless-stopped
+
+  nestshift-energy-agent:
+    build:
+      context: ../services/energy-agent
+      dockerfile: Dockerfile
+    container_name: nestshift-energy-agent
+    networks: [nestshift-dev]
+    environment:
+      - MQTT_HOST=mosquitto
+      - MQTT_PORT=1883
+      - INFLUXDB_URL=http://influxdb:8086
+      - ENERGY_AGENT_ENABLED=${ENERGY_AGENT_ENABLED:-false}
+    depends_on:
+      - mosquitto
+      - influxdb
+    restart: unless-stopped
+
+  nestshift-automation-agent:
+    build:
+      context: ../services/automation-agent
+      dockerfile: Dockerfile
+    container_name: nestshift-automation-agent
+    networks: [nestshift-dev]
+    environment:
+      - MQTT_HOST=mosquitto
+      - MQTT_PORT=1883
+      - API_URL=http://nestshift-api:8000
+      - AUTOMATION_AGENT_ENABLED=${AUTOMATION_AGENT_ENABLED:-false}
+    depends_on:
+      - mosquitto
+      - nestshift-api
+    restart: unless-stopped
+
+  nestshift-system-agent:
+    build:
+      context: ../services/system-agent
+      dockerfile: Dockerfile
+    container_name: nestshift-system-agent
+    networks: [nestshift-dev]
+    environment:
+      - MQTT_HOST=mosquitto
+      - MQTT_PORT=1883
+    depends_on:
+      - mosquitto
+    restart: unless-stopped
+
+# nestshift-dashboard:
+#   build:
+#     context: ../dashboard
+#     dockerfile: Dockerfile
+#   container_name: nestshift-dashboard
+#   networks: [nestshift-dev]
+#   ports:
+#     - "3000:3000"
+#   environment:
+#     - VITE_API_URL=http://localhost:8000
+#   depends_on:
+#     - nestshift-api
+#   restart: unless-stopped
+
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:latest
+    container_name: nestshift-zigbee2mqtt
+    networks: [nestshift-dev]
+    environment:
+      - ZIGBEE2MQTT_DATA=/app/data
+    volumes:
+      - ../services/zigbee/configuration.yaml:/app/data/configuration.yaml
+    depends_on:
+      - mosquitto
+    restart: unless-stopped
+
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nestshift-nodered
+    networks: [nestshift-dev]
+    ports:
+      - "1880:1880"
+    volumes:
+      - ../config/nodered:/data/config
+      - nodered-data:/data
+    restart: unless-stopped

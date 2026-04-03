@@ -1,0 +1,3 @@
+# Automation Agent
+
+Stub README.
