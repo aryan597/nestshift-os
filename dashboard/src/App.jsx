@@ -132,7 +132,6 @@ function AppContent() {
         <div className="max-w-7xl mx-auto">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/neural-map" element={<NeuralMap />} />
             <Route path="/schedule" element={<SmartSchedule />} />
             <Route path="/devices" element={<Devices />} />
             <Route path="/energy" element={<Energy />} />
