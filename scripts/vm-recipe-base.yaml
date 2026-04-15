@@ -1,0 +1,30 @@
+architecture: amd64
+
+actions:
+  - action: debootstrap
+    suite: bookworm
+    components:
+      - main
+      - non-free-firmware
+
+  - action: apt
+    packages:
+      - sudo
+      - python3
+      - python3-venv
+      - mosquitto
+      - influxdb2
+      - chromium-browser
+      - xserver-xorg
+      - lightdm
+      - network-manager
+      - curl
+      - git
+
+  - action: run
+    chroot: true
+    command: |
+      echo "nestshift" > /etc/hostname
+      useradd -m -s /bin/bash nestshift
+      echo "nestshift:nestshift" | chpasswd
+      usermod -aG sudo nestshift

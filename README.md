@@ -1,62 +1,61 @@
-# 🧠 NestShift OS: Neural Autonomous Residential Engine (NARE)
+# NestShift OS
 
-## 🎯 The Vision: An Autonomous "Pre-Frontal Cortex" for the Home
+## 🎯 Complete Edge AI Operating System for Home Energy Optimization
 
-**NestShift OS** is a highly premium, local-first **Edge AI Operating System** that transforms a standard house into a learning, adaptive environment. Unlike traditional "Smart Home" systems (Home Assistant, Alexa) that rely on brittle "If/Then" rules, NestShift utilizes **Synthetic Neural Logic** to grow its own understanding of your life.
+**NestShift OS** is a comprehensive, autonomous edge AI operating system designed specifically for intelligent home energy management. Built across 6 development phases, this production-ready system provides real-time energy optimization, predictive modeling, adaptive automation, and comprehensive safety controls - all running entirely on-device without any cloud dependency.
 
-### ✨ Key Neural Features
-- **🧠 NARE Core (Neural Autonomous Residential Engine)** - A Spiking Neural Network (LIF model) that learns usage patterns through synaptic plasticity.
-- **⚡ Hebbian Learning** - "Neurons that fire together, wire together." The house learns your habits by observing manual overrides and sensor correlations.
-- **🛡️ Πsafe (Safety First) Architecture** - An immutable inhibitory layer that prevents autonomous actions from violating physical safety or grid constraints.
-- **🗣️ Explainable AI (XAI)** - Every action taken by the brain includes a "Neural Trace" explaining the logic and confidence level in plain English.
-- **📺 Kiosk-Mode Interface** - A native, hardware-optimized UI that boots directly on the Hub's display for a premium "appliance" feel.
-- **🔐 Local Sovereignty** - 100% of the cognitive processing happens on-device. Your life stays private.
+### ✨ Key Features
+- **🏠 Autonomous Energy Optimization** - AI agents learn and optimize energy usage patterns
+- **🔒 Safety-First Design** - Immutable hardware safety constraints prevent dangerous operations
+- **📊 Real-Time Monitoring** - Comprehensive telemetry with drift detection and system health
+- **🔐 Enterprise Security** - JWT authentication, TLS-encrypted MQTT, secure API endpoints
+- **🧪 Full Test Suite** - 14 integration tests covering all critical safety and functionality
+- **🚀 Production Ready** - Complete CI/CD pipeline, OS build scripts, and deployment automation
+- **📱 Multi-Platform** - Web dashboard, mobile client, and hardware interfaces
+- **⚡ Edge-First Architecture** - All AI processing happens locally, ensuring privacy and speed
 
-## 🏗️ System Architecture: The Neural Stack
+## 🏗️ Complete System Architecture
 
+### Core Architecture
 ```
-┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
-│  Premium UI     │      │   Neural Brain  │      │   Πsafe Filter  │
-│  (React Kiosk)  │◄────►│   (NARE / LIF)  │◄────►│   (Immutable)   │
-└─────────────────┘      └─────────────────┘      └─────────────────┘
-         ▲                        ▲                        ▲
-         │                        │                        │
-         ▼                        ▼                        ▼
-┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
-│   MQTT Broker   │◄────►│  Energy Agent   │◄────►│  System Agent   │
-│   (Nervous Sys) │      │  (Agile Sync)   │      │  (Drift Detect) │
-└─────────────────┘      └─────────────────┘      └─────────────────┘
-```
-
-## 🚀 Building the Production OS Image
-
-NestShift is built as a custom Linux distribution using the industrial `pi-gen` toolchain.
-
-### 1. Prerequisites
-- A Linux environment (Ubuntu 24.04 recommended) with `qemu-user-static` and `binfmt-support`.
-- At least 50GB of free space.
-
-### 2. Build Commands
-```bash
-# 1. Setup the builder
-git clone --depth 1 https://github.com/RPi-Distro/pi-gen.git
-cd pi-gen && git checkout arm64
-
-# 2. Link the NestShift Stage
-ln -s ~/os-image/os/stage-nestshift stage-nestshift
-
-# 3. Start the build
-sudo CLEAN=1 ./build.sh
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Dashboard     │    │     API         │    │     MQTT        │
+│   (React)       │◄──►│   (FastAPI)     │◄──►│   (Mosquitto)   │
+│   WebSocket     │    │   JWT Auth      │    │   TLS 8883      │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         ▼                       ▼                       ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Energy Agent  │    │ Automation Agent│    │ System Agent   │
+│   (LightGBM)    │    │   (Behaviour)   │    │  (Monitoring)   │
+│  Forecasting    │    │   Learning      │    │  Drift Detect   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         └───────────────────────┼───────────────────────┘
+                                 │
+                    ┌─────────────────┐    ┌─────────────────┐
+                    │     InfluxDB    │    │     SQLite      │
+                    │   (Telemetry)   │    │   (Config)      │
+                    └─────────────────┘    └─────────────────┘
 ```
 
-### 3. Output
-The build produces a `nestshift-os.img` in the `deploy/` directory. This image is flashable to an SD card for Raspberry Pi 4/5 or bootable in QEMU for PC-based verification.
+### Hardware Integration Layer
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   GPIO Service  │    │   Zigbee2MQTT  │    │   Brain Service │
+│   (RPi.GPIO)    │    │   (Devices)     │    │  (Orchestrator) │
+│   Relays/Sensors│    │   Smart Home    │    │   Coordination │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
 
-## 🔒 The Πsafe Safety Mandate
-No command reaches the hardware without passing through the **Inhibitory Layer**.
-- **Sensor Coherence:** Ignores "impossible" sensor spikes (e.g., >5°C temp jump in 1 min).
-- **Critical Inhibition:** High-risk appliances (Ovens, Power Tools) are physically blocked from AI activation.
-- **Grid Protection:** Prevents simultaneous activation of >3 high-power devices to protect local wiring.
+### Mobile & External Interfaces
+```
+┌─────────────────┐    ┌─────────────────┐
+│   Flutter Client│    │   Node-RED      │
+│   (Mobile App)  │    │   (Workflows)   │
+│   MQTT + REST   │    │   Automation    │
+└─────────────────┘    └─────────────────┘
+```
 
 ## 🚀 How to Run NestShift OS
 
