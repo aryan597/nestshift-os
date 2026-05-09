@@ -1,0 +1,17 @@
+[Unit]
+Description=Zigbee2MQTT
+After=mosquitto.service
+Wants=mosquitto.service
+
+[Service]
+Type=simple
+User=zigbee2mqtt
+Group=zigbee2mqtt
+WorkingDirectory=/opt/zigbee2mqtt
+ExecStart=/usr/bin/node /opt/zigbee2mqtt/index.js
+Restart=on-failure
+RestartSec=10
+MemoryMax=128M
+
+[Install]
+WantedBy=multi-user.target

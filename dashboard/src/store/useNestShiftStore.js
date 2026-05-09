@@ -1,10 +1,6 @@
 import { create } from 'zustand';
 
 export const useNestShiftStore = create((set, get) => ({
-  // Core System
-  isOnboarded: false,
-  setIsOnboarded: (isOnboarded) => set({ isOnboarded }),
-
   // Connection
   apiConnected: false,
   mqttConnected: false,

@@ -1,131 +1,147 @@
-# NestShift OS: Neural Autonomous Residential Engine (NARE)
+# NestShift OS
 
-## 🎯 The Vision
-**NestShift OS** is a premium, edge-first operating system designed to transform residential spaces into truly autonomous environments. Unlike traditional smart home hubs that rely on rigid "if-this-then-that" rules, NestShift utilizes a **Synthetic Neural Core** that learns and adapts organically to user behavior and energy markets.
+A privacy-first, edge AI home automation and energy management platform. NestShift OS runs entirely locally on Raspberry Pi 5 with no cloud dependency — your home data never leaves your premises.
 
----
+## Overview
 
-## ✨ Core Pillars
+NestShift OS combines real-time sensor data, reinforcement learning automation agents, and intelligent energy management into a unified edge AI system. The platform orchestrates Zigbee devices, MQTT-based sensors, and local AI services to provide comfortable, cost-optimized home automation.
 
-### 1. 🧠 Neural Brain (NARE)
-The heart of NestShift is the **Neural Autonomous Residential Engine**. It uses **Leaky Integrate-and-Fire (LIF)** neuron models and **Hebbian Learning (STDP)** to form synapses between sensors and devices. 
-- **Learning**: "Neurons that fire together, wire together." If you manually turn on a light after a motion sensor fires, the Brain strengthens that connection.
-- **Autonomy**: Once a synapse is strong enough, the Brain takes the action for you.
-- **Explainability**: Every action has a "Neural Trace" explaining the trigger and synapse strength.
+### Core AI Stack
 
-### 2. 🛡️ Safety & Integrity (Πsafe)
-Security is immutable. No AI agent or user command can bypass the **Πsafe** hardware filter.
-- **Hard Clamps**: HVAC is strictly capped at 16-26°C.
-- **Grid Protection**: Maximum of 3 high-power devices (>1000W) can run simultaneously.
-- **Sensor Coherence**: Detects and ignores "impossible" sensor jumps (e.g., temperature spiking 10°C in one second).
-- **Inhibitory Control**: Critical appliances (ovens, stoves) are inhibited from autonomous activation.
+- **Python AI Services** — Asynchronous microservices using asyncio and aiomqtt
+- **FastAPI REST API** — Local API gateway with JWT authentication and safety filtering
+- **Whisper Small ASR** — On-device voice command processing
+- **RL Automation Agent** — Behaviour model learning household patterns
+- **Zigbee2MQTT** — Integration with Zigbee devices (TRVs, sensors, relays)
+- **Mosquitto MQTT** — Message broker for all sensor and agent communication
+- **Node-RED** — Visual flow-based programming for automation rules
+- **Octopus Agile Tariff Integration** — Real-time energy pricing optimization
 
-### 3. ⚡ Edge Intelligence (Agents)
-Specialized Python agents handle complex optimization tasks entirely on-device:
-- **Energy Agent**: Uses **LightGBM** to forecast demand and integrates with **Octopus Agile** for real-time tariff optimization.
-- **Automation Agent**: Learned behavior pattern recognition with probabilistic confidence scoring.
-- **System Agent**: Monitors hardware health and detects **AI Model Drift** to trigger automatic retraining.
+## AI Architecture
 
-### 4. 💎 OrbitAI Dashboard
-A high-end, glassmorphism-based UI built with **React + Vite + TailwindCSS**. 
-- **Premium Aesthetic**: Deep blacks, neon cyan/green accents, and thin glowing borders.
-- **Onboarding Wizard**: Native flow for Wi-Fi setup, mobile pairing, and hardware mapping.
-- **Real-time Telemetry**: Live energy rhythm charts and interactive comfort-cost dials.
+NestShift OS implements an LLM-orchestrated pipeline architecture — the same engineering principles used in enterprise AI systems (RAG pipelines, agentic systems, structured extraction), applied to home automation instead of document processing.
 
----
+### Pipeline Stages
 
-## 🏗️ System Architecture
+1. **Sensor Data Ingestion Layer**
+   - MQTT subscription to all device topics (`nestshift/devices/#`, `nestshift/sensors/#`)
+   - Real-time time-series storage in InfluxDB
+   - Data normalization and feature engineering at 1-minute resolution
 
-```mermaid
-graph TD
-    UI[OrbitAI Dashboard - React] <--> API[FastAPI Gateway]
-    API <--> MQTT[Mosquitto TLS Broker]
-    
-    subgraph "Neural Core"
-        Brain[NARE Brain - LIF Neurons]
-    end
-    
-    subgraph "AI Agents"
-        EA[Energy Agent - LightGBM]
-        AA[Automation Agent - Patterns]
-        SA[System Agent - Monitoring]
-    end
-    
-    subgraph "Hardware Layer"
-        GPIO[GPIO Service]
-        ZB[Zigbee2MQTT]
-    end
-    
-    MQTT <--> Brain
-    MQTT <--> EA
-    MQTT <--> AA
-    MQTT <--> SA
-    MQTT <--> GPIO
-    MQTT <--> ZB
-    
-    SA --> TS[InfluxDB Telemetry]
-    API --> DB[SQLite Config]
-```
+2. **Semantic Understanding and Intent Extraction**
+   - Voice commands processed through Whisper Small for on-device ASR
+   - Contextual intent extraction combining recent sensor state + user history
+   - Safety filter validation before any action reaches the decision engine
 
----
+3. **Local AI Decision Engine**
+   - **RL Agent**: BehaviourModel learns household patterns by recording device actions per hour-of-day. Confidence threshold determines when to act autonomously.
+   - **Rule Fusion**: Safety filter (`Πsafe`) provides immutable hardware constraints that no AI can bypass — HVAC temperature bounds, concurrent high-power device limits
+   - Drift detection via SystemAgent monitors prediction error rates and triggers model retraining
 
-## 🚀 Getting Started
+4. **Structured Output Layer**
+   - Device commands serialized as validated JSON
+   - Action schemas: `{ device_id, action, params, rule_validated, safety_clamped }`
+   - Published to MQTT for device execution
 
-### 🐳 Development Mode (Docker)
-The fastest way to run the full stack for testing and development:
+5. **Monitoring and Observability**
+   - All agent decisions logged to InfluxDB for downstream analytics
+   - Health topics published every 60 seconds per agent
+   - SystemAgent aggregates drift status and model freshness
+
+## Hardware Stack
+
+- **Raspberry Pi 5** — Primary compute platform (4GB+ recommended)
+- **Shelly 1PM** — WiFi relays with power monitoring
+- **Danfoss Ally Zigbee TRVs** — Radiator temperature control
+- **Aqara Sensors** — Temperature, humidity, motion, door/window
+- **CT Clamp** — Non-invasive load monitoring for NILM (Non-Intrusive Load Monitoring)
+
+## Services
+
+| Service | Purpose |
+|---------|---------|
+| `api` | FastAPI REST gateway with auth, safety filter, energy/tariff endpoints |
+| `automation-agent` | RL-based behaviour learning, pattern prediction, rule validation |
+| `energy-agent` | Octopus Agile tariff fetching, demand forecasting (LightGBM), load scheduling |
+| `system-agent` | Resource monitoring, drift detection, model lifecycle management |
+| `brain` | MQTT subscriber for future neural network processing |
+| `gpio` | Raspberry Pi GPIO operations |
+| `zigbee` | Zigbee2MQTT configuration |
+| `mqtt` | Mosquitto broker configuration |
+| `influxdb` | Time-series database for sensor data and metrics |
+
+## Setup
+
+### Prerequisites
+
+- Raspberry Pi 5 with Raspberry Pi OS (64-bit)
+- Docker and Docker Compose
+- MQTT broker (Mosquitto)
+- InfluxDB for time-series storage
+
+### Quick Start
 
 ```bash
 # Clone the repository
-git clone https://github.com/NestShift/nestshift-os.git
+git clone https://github.com/yourorg/nestshift-os.git
 cd nestshift-os
 
-# Start the complete stack
-docker-compose -f dev/docker-compose.dev.yml up -d
+# Copy environment template
+cp .env.example .env
+# Edit .env with your configuration
 
-# Access the dashboard
-# Open http://localhost:3000
+# Start all services
+docker-compose up -d
+
+# Check service health
+curl http://localhost:8000/health
 ```
 
-### 🥧 Production OS Build
-NestShift is designed to run as a custom OS on Raspberry Pi 4/5 or Jetson Nano.
+### Configuration
 
-```bash
-# Build the custom OS image (requires Linux)
-cd os/
-./scripts/build-vm.sh  # Or use pi-gen manually
+All configuration is managed via environment variables in `.env`. Key variables:
+
+- `MQTT_HOST`, `MQTT_PORT` — MQTT broker connection
+- `INFLUXDB_URL`, `INFLUXDB_TOKEN` — InfluxDB connection
+- `JWT_SECRET` — API authentication secret
+- `OCTOPUS_API_KEY` — For tariff fetching (optional)
+
+## Project Structure
+
+```
+nestshift-github-ready/
+├── services/
+│   ├── api/              # FastAPI REST service
+│   ├── automation-agent/ # RL behaviour learning agent
+│   ├── energy-agent/     # Tariff and forecasting agent
+│   ├── system-agent/     # Monitoring and drift detection
+│   ├── brain/            # Future neural network processing
+│   ├── gpio/             # Raspberry Pi GPIO service
+│   ├── zigbee/           # Zigbee2MQTT config
+│   ├── mqtt/             # Mosquitto broker config
+│   └── influxdb/         # InfluxDB initialization
+├── config/
+│   ├── gpio/             # GPIO pin configuration
+│   └── nodered/          # Node-RED settings
+├── systemd/              # Systemd service units
+├── tests/                # Pytest test suite
+├── dashboard/            # React dashboard frontend
+├── board/                # Buildroot overlay for custom OS image
+└── scripts/              # Installation and setup scripts
 ```
 
-### 🧪 Running Tests
-We maintain a 100% pass rate on all critical safety and logic tests.
+## Contributing
 
-```bash
-pip install -r tests/requirements.txt
-pytest tests/ -v
-```
+Contributions are welcome. Please ensure:
+
+- All Python code passes linting (`ruff check`)
+- Tests pass before submitting PRs
+- New AI/ML features include drift detection and observability hooks
+
+## License
+
+MIT License — See LICENSE file for details.
 
 ---
 
-## 📁 Repository Map
-
-- `dashboard/`: React web interface (OrbitAI aesthetic).
-- `services/`: Microservices (API, Brain, Energy, Automation, System, GPIO).
-- `os/`: Raspberry Pi OS build pipeline (`pi-gen` stage).
-- `scripts/`: Installation, flashing, and setup utilities.
-- `database/`: Schema and migrations for SQLite/InfluxDB.
-- `mobile/`: Flutter client library for MQTT/REST integration.
-- `tests/`: Integration tests for safety, drift, and learning logic.
-
----
-
-## 🔒 Security & Privacy
-- **Local-First**: 100% of data and processing stays in your home.
-- **Encrypted**: All MQTT traffic uses TLS 1.3 with client certificates.
-- **Authenticated**: REST API endpoints are protected by JWT tokens.
-- **Safe**: Hardware-level constraints are hardcoded and immutable.
-
----
-
-## 🤝 Contributing
-NestShift is an ambitious project at the intersection of neuroscience and home automation. We welcome contributions to the NARE neural models and Πsafe safety logic.
-
-*Built with ❤️ by NestShift Ltd for a sustainable, intelligent future.*
+Built with privacy-first principles. All inference runs locally — your home, your data, your AI.

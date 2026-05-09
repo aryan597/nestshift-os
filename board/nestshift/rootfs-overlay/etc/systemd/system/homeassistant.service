@@ -1,0 +1,24 @@
+[Unit]
+Description=Home Assistant Core (NestShift Backend)
+After=network-online.target mosquitto.service nestshift-api.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=homeassistant
+Group=homeassistant
+WorkingDirectory=/srv/homeassistant
+ExecStart=/srv/homeassistant/bin/hass \
+  --config /etc/homeassistant \
+  --log-file /var/log/homeassistant.log \
+  --skip-pip
+Restart=on-failure
+RestartSec=10
+# Memory guard — critical on 1GB RAM Pi 3B+
+MemoryMax=256M
+MemoryHigh=220M
+# HA startup is slow — give it time before systemd kills it
+TimeoutStartSec=120
+
+[Install]
+WantedBy=multi-user.target

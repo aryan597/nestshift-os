@@ -1,0 +1,31 @@
+homeassistant:
+  name: NestShift Hub
+  unit_system: metric
+  currency: GBP
+  country: GB
+  time_zone: Europe/London
+
+# API access for NestShift dashboard
+api:
+
+# WebSocket API (NestShift UI connects here)
+websocket_api:
+
+# MQTT for Zigbee2MQTT and sensor data
+mqtt:
+  broker: localhost
+  port: 1883
+  discovery: true
+  discovery_prefix: homeassistant
+
+# Disable HA's own UI frontend entirely
+# NestShift shell replaces it completely
+# frontend: (intentionally omitted)
+
+# Disable cloud, analytics
+cloud:
+analytics:
+  reporting: false
+
+logger:
+  default: warning

@@ -1,13 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { useNestShiftStore } from '../store/useNestShiftStore';
+import { supabase, registerHub } from '../services/supabase';
 import { tokens, Glass } from '../design-system';
 
 export default function Onboarding() {
   const [step, setStep] = useState(1);
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const setIsOnboarded = useNestShiftStore((state) => state.setIsOnboarded);
   const [mockLoading, setMockLoading] = useState(false);
 
   const handleNext = () => setStep(step + 1);
+
+  // Step 1: Country Select (MANDATORY - regulatory compliance)
+  const renderCountrySelect = () => (
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="text-center space-y-2 mb-8">
+        <h2 className="text-3xl font-bold tracking-tight">Select Country</h2>
+        <p className="text-gray-400">Required for wifi regulatory compliance</p>
+      </div>
+      <div className="space-y-3 max-w-md mx-auto">
+        {['United States', 'United Kingdom', 'Germany', 'France', 'Canada', 'Australia', 'India'].map((country, i) => (
+          <button 
+            key={country}
+            onClick={() => { setSelectedCountry(country); handleNext(); }}
+            className="w-full flex justify-between items-center p-4 rounded-xl border border-white/10 hover:border-cyan-500 hover:bg-white/5 transition-all"
+          >
+            <span className="font-medium text-lg">{country}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 
   // Step 1: Wi-Fi setup
   const renderWifiSetup = () => (
@@ -34,25 +57,43 @@ export default function Onboarding() {
     </div>
   );
 
-  // Step 2: Login
+  // Step 3: Login
   const renderLogin = () => (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center space-y-2 mb-8">
         <h2 className="text-3xl font-bold tracking-tight">NestShift Account</h2>
-        <p className="text-gray-400">Sign in to your pre-configured NestShift profile.</p>
+        <p className="text-gray-400">Sign in to link this hub to your account</p>
       </div>
       <div className="space-y-4 max-w-sm mx-auto">
+        <button 
+          className="w-full flex items-center justify-center gap-3 bg-white text-black py-3 rounded-xl font-medium hover:bg-gray-100 transition-colors"
+        >
+          <span>🔵</span> Continue with Google
+        </button>
+        <button 
+          className="w-full flex items-center justify-center gap-3 bg-black border border-white/20 text-white py-3 rounded-xl font-medium hover:bg-white/5 transition-colors"
+        >
+          <span>🍎</span> Continue with Apple
+        </button>
+
+        <div className="relative my-4">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-white/10"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-2 bg-[#080b12] text-gray-500">or sign in with email</span>
+          </div>
+        </div>
+
         <input 
           type="email" 
           placeholder="Email address" 
           className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500 transition-colors"
-          defaultValue="admin@nestshift.com"
         />
         <input 
           type="password" 
           placeholder="Password" 
           className="w-full bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500 transition-colors"
-          defaultValue="********"
         />
         <button 
           onClick={handleNext}
@@ -189,11 +230,12 @@ export default function Onboarding() {
 
       {/* Main Glass Panel */}
       <Glass className="w-full max-w-4xl min-h-[500px] p-12 flex flex-col items-center justify-center relative z-10 shadow-2xl">
-        {step === 1 && renderWifiSetup()}
-        {step === 2 && renderLogin()}
-        {step === 3 && renderPairing()}
-        {step === 4 && renderHardware()}
-        {step === 5 && renderLoading()}
+        {step === 1 && renderCountrySelect()}
+        {step === 2 && renderWifiSetup()}
+        {step === 3 && renderLogin()}
+        {step === 4 && renderPairing()}
+        {step === 5 && renderHardware()}
+        {step === 6 && renderLoading()}
       </Glass>
     </div>
   );

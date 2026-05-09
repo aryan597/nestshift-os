@@ -1,0 +1,19 @@
+[Unit]
+Description=Z-Wave JS UI
+After=mosquitto.service
+Wants=mosquitto.service
+
+[Service]
+Type=simple
+User=zwave
+Group=zwave
+WorkingDirectory=/opt/zwave-js-ui
+Environment=PORT=8091
+Environment=ZWAVEJS_EXTERNAL_CONFIG=/etc/zwave-js-ui
+ExecStart=/opt/zwave-js-ui/zwave-js-ui-linux-arm64
+Restart=on-failure
+RestartSec=10
+MemoryMax=128M
+
+[Install]
+WantedBy=multi-user.target

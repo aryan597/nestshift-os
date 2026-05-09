@@ -22,6 +22,11 @@ export async function mockControlDevice(deviceId, action, params = {}) {
   return { status: "success", deviceId, action };
 }
 
+export async function mockCreateDevice(name, type, connection_type) {
+  await delay(200);
+  return { success: true, id: `dev_${Math.floor(Math.random() * 1000)}` };
+}
+
 export async function mockGetEnergyUsage(period = '24h') {
   await delay(400);
   const readings = [];
