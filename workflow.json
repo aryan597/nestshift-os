@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "max_epochs": 10,
+  "early_stop": {
+    "patience": 3,
+    "min_improvement": 0.001
+  },
+  "subagents": {
+    "count": { "min": 2, "max": 4 },
+    "roles": ["A", "B", "C", "D"],
+    "timeout_seconds": 1800
+  },
+  "evaluation": {
+    "weights": {
+      "metric_delta": 0.40,
+      "test_pass": 0.20,
+      "compile_ok": 0.15,
+      "diff_size": 0.15,
+      "rationale_quality": 0.10
+    },
+    "test_command": "python3 -m pytest evals/ -q",
+    "sim_command": "python3 simulation/run_experiments.py",
+    "compile_command": "pdflatex -interaction=nonstopmode paper_main.tex"
+  },
+  "hypothesis_generator": {
+    "strategy": "rolling_best_plus_noise",
+    "diversity_temperature": 0.7
+  },
+  "logging": {
+    "dir": ".experiment_logs",
+    "keep_subagent_workspaces": true,
+    "compress_after_epoch": false
+  }
+}

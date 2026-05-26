@@ -107,3 +107,18 @@ temp/
 # InfluxDB
 *.wal
 *.tsm
+# Experiment loop runtime
+.experiment_logs/
+merged/
+
+# LaTeX build artifacts
+*.aux
+*.out
+*.log
+*.synctex.gz
+
+# Preview images (regenerable)
+papers/version_a_conservative/preview-*.png
+
+# Simulation results (regenerable)
+simulation/results/*.png
