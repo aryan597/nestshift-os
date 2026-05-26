@@ -1,0 +1,278 @@
+{
+  "Flat": {
+    "No-Optimization": {
+      "stats": {
+        "mean_cost": 2049.228,
+        "std_cost": 95.22483844039854,
+        "mean_energy": 6830.76,
+        "std_energy": 317.41612813466173,
+        "mean_comfort": 0.9588568619707631,
+        "std_comfort": 4.097462397512676,
+        "cost_ci_low": 1936.9650000000001,
+        "cost_ci_high": 2266.464
+      },
+      "reduction": {}
+    },
+    "Rule-Based": {
+      "stats": {
+        "mean_cost": 1857.288,
+        "std_cost": 55.43186174033844,
+        "mean_energy": 6190.96,
+        "std_energy": 184.77287246779488,
+        "mean_comfort": 1.3558939717289624,
+        "std_comfort": 0.16943413417229283,
+        "cost_ci_low": 1774.545,
+        "cost_ci_high": 1957.7160000000001
+      },
+      "reduction": {
+        "mean_reduction_pct": 9.23503404204456,
+        "std_reduction_pct": 3.56495277799899,
+        "ci_low": 8.147528280980685,
+        "ci_high": 17.238433033389907
+      }
+    },
+    "Proposed": {
+      "stats": {
+        "mean_cost": 1857.288,
+        "std_cost": 55.43186174033844,
+        "mean_energy": 6190.96,
+        "std_energy": 184.77287246779488,
+        "mean_comfort": 1.3558939717289624,
+        "std_comfort": 0.16943413417229283,
+        "cost_ci_low": 1774.545,
+        "cost_ci_high": 1957.7160000000001
+      },
+      "reduction": {
+        "mean_reduction_pct": 9.23503404204456,
+        "std_reduction_pct": 3.56495277799899,
+        "ci_low": 8.147528280980685,
+        "ci_high": 17.238433033389907
+      }
+    },
+    "Hybrid": {
+      "stats": {
+        "mean_cost": 1857.288,
+        "std_cost": 55.43186174033844,
+        "mean_energy": 6190.96,
+        "std_energy": 184.77287246779488,
+        "mean_comfort": 1.3558939717289624,
+        "std_comfort": 0.16943413417229283,
+        "cost_ci_low": 1774.545,
+        "cost_ci_high": 1957.7160000000001
+      },
+      "reduction": {
+        "mean_reduction_pct": 9.23503404204456,
+        "std_reduction_pct": 3.56495277799899,
+        "ci_low": 8.147528280980685,
+        "ci_high": 17.238433033389907
+      }
+    }
+  },
+  "ToU": {
+    "No-Optimization": {
+      "stats": {
+        "mean_cost": 1252.4820000000002,
+        "std_cost": 63.49145907915488,
+        "mean_energy": 6830.76,
+        "std_energy": 317.41612813466173,
+        "mean_comfort": 0.9588568619707631,
+        "std_comfort": 4.097462397512676,
+        "cost_ci_low": 1177.2465000000002,
+        "cost_ci_high": 1397.1449999999998
+      },
+      "reduction": {}
+    },
+    "Rule-Based": {
+      "stats": {
+        "mean_cost": 1090.8419999999999,
+        "std_cost": 34.2714522015044,
+        "mean_energy": 6190.96,
+        "std_energy": 184.77287246779488,
+        "mean_comfort": 1.3558939717289624,
+        "std_comfort": 0.16943413417229283,
+        "cost_ci_low": 1035.1365,
+        "cost_ci_high": 1153.8000000000002
+      },
+      "reduction": {
+        "mean_reduction_pct": 12.755007272092238,
+        "std_reduction_pct": 3.680207055610352,
+        "ci_low": 11.020811785368528,
+        "ci_high": 21.30105574900295
+      }
+    },
+    "Proposed": {
+      "stats": {
+        "mean_cost": 1090.8419999999999,
+        "std_cost": 34.2714522015044,
+        "mean_energy": 6190.96,
+        "std_energy": 184.77287246779488,
+        "mean_comfort": 1.3558939717289624,
+        "std_comfort": 0.16943413417229283,
+        "cost_ci_low": 1035.1365,
+        "cost_ci_high": 1153.8000000000002
+      },
+      "reduction": {
+        "mean_reduction_pct": 12.755007272092238,
+        "std_reduction_pct": 3.680207055610352,
+        "ci_low": 11.020811785368528,
+        "ci_high": 21.30105574900295
+      }
+    },
+    "Hybrid": {
+      "stats": {
+        "mean_cost": 1090.8419999999999,
+        "std_cost": 34.2714522015044,
+        "mean_energy": 6190.96,
+        "std_energy": 184.77287246779488,
+        "mean_comfort": 1.3558939717289624,
+        "std_comfort": 0.16943413417229283,
+        "cost_ci_low": 1035.1365,
+        "cost_ci_high": 1153.8000000000002
+      },
+      "reduction": {
+        "mean_reduction_pct": 12.755007272092238,
+        "std_reduction_pct": 3.680207055610352,
+        "ci_low": 11.020811785368528,
+        "ci_high": 21.30105574900295
+      }
+    }
+  },
+  "Agile": {
+    "No-Optimization": {
+      "stats": {
+        "mean_cost": 962.480420693573,
+        "std_cost": 50.07884451352843,
+        "mean_energy": 6830.76,
+        "std_energy": 317.41612813466173,
+        "mean_comfort": 0.9588568619707631,
+        "std_comfort": 4.097462397512676,
+        "cost_ci_low": 910.8067166826842,
+        "cost_ci_high": 1072.9493522467867
+      },
+      "reduction": {}
+    },
+    "Rule-Based": {
+      "stats": {
+        "mean_cost": 863.3533257432298,
+        "std_cost": 26.495121836483825,
+        "mean_energy": 6190.96,
+        "std_energy": 184.77287246779488,
+        "mean_comfort": 1.3558939717289624,
+        "std_comfort": 0.16943413417229283,
+        "cost_ci_low": 822.6875586741463,
+        "cost_ci_high": 910.2006023673603
+      },
+      "reduction": {
+        "mean_reduction_pct": 10.142029332454369,
+        "std_reduction_pct": 3.7364296761195828,
+        "ci_low": 5.818318040297901,
+        "ci_high": 18.788535093884086
+      }
+    },
+    "Proposed": {
+      "stats": {
+        "mean_cost": 867.1274808635765,
+        "std_cost": 32.46006914139096,
+        "mean_energy": 6190.96,
+        "std_energy": 184.77287246779488,
+        "mean_comfort": 1.3558939717289624,
+        "std_comfort": 0.16943413417229283,
+        "cost_ci_low": 820.8860045247361,
+        "cost_ci_high": 926.8342920694976
+      },
+      "reduction": {
+        "mean_reduction_pct": 9.711723176940126,
+        "std_reduction_pct": 4.822335112080757,
+        "ci_low": 4.396276946587398,
+        "ci_high": 21.28896099873823
+      }
+    },
+    "Hybrid": {
+      "stats": {
+        "mean_cost": 862.7467526004908,
+        "std_cost": 33.7609865175803,
+        "mean_energy": 6190.96,
+        "std_energy": 184.77287246779488,
+        "mean_comfort": 1.3558939717289624,
+        "std_comfort": 0.16943413417229283,
+        "cost_ci_low": 804.5662582556922,
+        "cost_ci_high": 923.3158160155729
+      },
+      "reduction": {
+        "mean_reduction_pct": 10.180081514787684,
+        "std_reduction_pct": 4.6504059535669215,
+        "ci_low": 6.743974706852067,
+        "ci_high": 21.383411585318015
+      }
+    }
+  },
+  "Volatile": {
+    "No-Optimization": {
+      "stats": {
+        "mean_cost": 1431.0531962593816,
+        "std_cost": 65.55314083528667,
+        "mean_energy": 6830.76,
+        "std_energy": 317.41612813466173,
+        "mean_comfort": 0.9588568619707631,
+        "std_comfort": 4.097462397512676,
+        "cost_ci_low": 1356.8271680796938,
+        "cost_ci_high": 1576.1650363695487
+      },
+      "reduction": {}
+    },
+    "Rule-Based": {
+      "stats": {
+        "mean_cost": 1294.6314528649032,
+        "std_cost": 44.977440997319,
+        "mean_energy": 6190.96,
+        "std_energy": 184.77287246779488,
+        "mean_comfort": 1.3558939717289624,
+        "std_comfort": 0.16943413417229283,
+        "cost_ci_low": 1221.8050073574377,
+        "cost_ci_high": 1364.3323265496058
+      },
+      "reduction": {
+        "mean_reduction_pct": 9.40796369067731,
+        "std_reduction_pct": 3.7884926147877396,
+        "ci_low": 6.818090176848547,
+        "ci_high": 18.057073779514266
+      }
+    },
+    "Proposed": {
+      "stats": {
+        "mean_cost": 1291.3264343716503,
+        "std_cost": 43.86527613395442,
+        "mean_energy": 6190.96,
+        "std_energy": 184.77287246779488,
+        "mean_comfort": 1.3558939717289624,
+        "std_comfort": 0.16943413417229283,
+        "cost_ci_low": 1231.2762811094078,
+        "cost_ci_high": 1362.9374978589947
+      },
+      "reduction": {
+        "mean_reduction_pct": 9.638192585556002,
+        "std_reduction_pct": 3.751358349780882,
+        "ci_low": 6.467070831658907,
+        "ci_high": 18.286400163368924
+      }
+    },
+    "Hybrid": {
+      "stats": {
+        "mean_cost": 1288.9024593076215,
+        "std_cost": 42.155742195902256,
+        "mean_energy": 6190.96,
+        "std_energy": 184.77287246779488,
+        "mean_comfort": 1.3558939717289624,
+        "std_comfort": 0.16943413417229283,
+        "cost_ci_low": 1217.0686245610186,
+        "cost_ci_high": 1363.2311637765988
+      },
+      "reduction": {
+        "mean_reduction_pct": 9.806781031560927,
+        "std_reduction_pct": 3.694489614841228,
+        "ci_low": 7.27149911037829,
+        "ci_high": 18.371165856759298
+      }
+    }
+  }
+}

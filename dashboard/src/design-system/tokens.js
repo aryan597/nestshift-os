@@ -7,22 +7,23 @@ export const tokens = {
       overlay: 'rgba(255,255,255,0.04)',
     },
     accent: {
-      primary: '#6366f1',    // indigo
-      energy: '#10b981',     // green — cost savings / efficiency
-      warning: '#f59e0b',    // amber — price spikes / alerts
-      danger: '#ef4444',     // red — safety / errors
-      ai: '#a78bfa',         // violet — AI decisions / agent activity
+      primary: '#00f5d4',    // neon cyan - OrbitAI primary
+      secondary: '#7b2fff',  // electric purple - OrbitAI secondary
+      energy: '#10b981',     // green — cost savings
+      warning: '#ffb800',    // amber — price spikes / alerts
+      danger: '#ff3d3d',     // red — safety / errors
+      ai: '#a78bfa',         // violet — AI decisions
     },
     text: {
       primary: '#f1f5f9',
       secondary: '#94a3b8',
       muted: '#475569',
     },
-    border: 'rgba(255,255,255,0.08)',
+    border: 'rgba(0,245,212,0.15)',
     glass: {
       bg: 'rgba(255,255,255,0.05)',
-      border: 'rgba(255,255,255,0.10)',
-      blur: '20px',
+      border: 'rgba(0,245,212,0.15)',
+      blur: '12px',
     }
   },
   radius: {
@@ -33,9 +34,10 @@ export const tokens = {
   },
   shadow: {
     glow: {
-      primary: '0 0 20px rgba(99,102,241,0.3)',
+      primary: '0 0 20px rgba(0,245,212,0.3)',
+      secondary: '0 0 20px rgba(123,47,255,0.3)',
       energy: '0 0 20px rgba(16,185,129,0.3)',
-      warning: '0 0 20px rgba(245,158,11,0.3)',
+      warning: '0 0 20px rgba(255,184,0,0.3)',
     }
   }
-}
+};

@@ -189,8 +189,31 @@ nestshift-github-ready/
 
 ---
 
+## Research and Publications
+
+This repository includes a complete digital twin simulation framework and two academic paper drafts derived from the NestShift architecture.
+
+### Papers
+
+- **`papers/version_a_conservative/`** — *A Multi-Agent, Local-First Edge AI Architecture for Autonomous Residential Energy Optimisation Under Dynamic Tariffs*. Conservative structure close to the original draft. Demonstrates 9–13% cost reduction across four tariff scenarios.
+- **`papers/version_b_solar/`** — *SolarShift: A Local-First Edge AI Architecture for Solar Self-Consumption and Dynamic Tariff Arbitrage*. Higher-impact reframing with a Solar Forecasting Agent. Projects 12–38% savings for solar-equipped households.
+
+### Simulation Framework
+
+The `simulation/` directory contains a reproducible digital twin for evaluating multi-agent energy optimisation:
+
+```bash
+cd simulation/
+python3 run_experiments.py          # Main Monte Carlo suite (4 tariffs × 4 controllers × 20 runs)
+python3 analysis_learning_curve.py  # 90-day convergence analysis
+python3 analysis_sensitivity.py     # Comfort-cost (λ) and risk (β) sweeps
+python3 analysis_drift.py           # Behavioral drift detection scenario
+```
+
+Results are written to `simulation/results/`.
+
 ## Contributing
 
-NestShift is an ambitious project at the intersection of neuroscience and home automation. We welcome contributions to the NARE neural models and Pi-safe safety logic.
+NestShift is an ambitious project at the intersection of neuroscience and home automation. We welcome contributions to the NARE neural models, Pi-safe safety logic, and the digital twin simulation framework.
 
 *Built with care by NestShift Ltd for a sustainable, intelligent future.*

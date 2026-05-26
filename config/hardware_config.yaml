@@ -1,0 +1,84 @@
+# NestShift Hardware Configuration
+# GPIO and Zigbee device mappings
+
+# GPIO Pin Configuration
+gpio:
+  poll_interval_ms: 100
+  debounce_ms: 50
+  
+  pins:
+    motion_living_room:
+      pin: 17
+      type: input
+      pull: up
+      topic: "nestshift/sensors/motion/living_room"
+    motion_bedroom:
+      pin: 27
+      type: input
+      pull: up
+      topic: "nestshift/sensors/motion/bedroom"
+    door_front:
+      pin: 4
+      type: input
+      pull: up
+      topic: "nestshift/sensors/door/front"
+    light_living_room:
+      pin: 22
+      type: output
+      topic: "nestshift/devices/light/living_room/set"
+    light_bedroom:
+      pin: 25
+      type: output
+      topic: "nestshift/devices/light/bedroom/set"
+    switch_kettle:
+      pin: 23
+      type: output
+      topic: "nestshift/devices/switch/kettle/set"
+
+# Zigbee Device Mappings
+zigbee:
+  broker: "localhost"
+  port: 1883
+  
+  devices:
+    - friendly_name: "motion_sensor_lounge"
+      type: motion
+      room: living_room
+      nestshift_topic: "nestshift/sensors/motion/living_room"
+      
+    - friendly_name: "motion_sensor_bedroom"
+      type: motion
+      room: bedroom
+      nestshift_topic: "nestshift/sensors/motion/bedroom"
+      
+    - friendly_name: "temp_sensor_living"
+      type: temperature
+      room: living_room
+      nestshift_topic: "nestshift/sensors/temperature/living_room"
+      
+    - friendly_name: "temp_sensor_bedroom"
+      type: temperature
+      room: bedroom
+      nestshift_topic: "nestshift/sensors/temperature/bedroom"
+      
+    - friendly_name: "door_sensor_front"
+      type: door
+      location: front
+      nestshift_topic: "nestshift/sensors/door/front"
+      
+    - friendly_name: "smart_plug_kettle"
+      type: switch
+      name: kettle
+      nestshift_topic: "nestshift/devices/switch/kettle/set"
+      zigbee_command_topic: "zigbee2mqtt/smart_plug_kettle/set"
+      
+    - friendly_name: "smart_plug_lamp"
+      type: switch
+      name: lamp
+      nestshift_topic: "nestshift/devices/light/living_room/set"
+      zigbee_command_topic: "zigbee2mqtt/smart_plug_lamp/set"
+
+# MQTT Settings
+mqtt:
+  broker: "localhost"
+  port: 1883

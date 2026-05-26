@@ -1,0 +1,38 @@
+# NestShift Brain / NARE Configuration
+# All parameters - no hardcoded values anywhere in code
+
+# MQTT Configuration
+mqtt_host: "localhost"
+mqtt_port: 1883
+
+# LIF Neuron Parameters
+lif:
+  tau_m_ms: 20.0           # Membrane time constant (ms)
+  v_rest_mv: -70.0         # Resting potential (mV)
+  v_threshold_mv: -55.0     # Spike threshold (mV)
+  v_reset_mv: -75.0         # Reset potential after spike (mV)
+  r_membrane: 10.0         # Membrane resistance (MΩ)
+  refractory_period_ms: 2.0 # Refractory period (ms)
+
+# STDP Learning Parameters
+a_plus: 0.01               # Learning rate for potentiation
+a_minus: 0.012             # Learning rate for depression
+tau_plus_ms: 20.0          # Time constant for potentiation (ms)
+tau_minus_ms: 20.0         # Time constant for depression (ms)
+w_min: 0.0                 # Minimum synapse weight
+w_max: 1.0                 # Maximum synapse weight
+
+# Synapse Registry
+initial_weight: 0.1         # Initial weight for new synapses
+prune_threshold: 0.01       # Prune synapses below this weight
+prune_days: 30              # Inactive days before pruning
+persist_interval_sec: 60   # Persist to SQLite every 60 seconds
+db_path: "brain/synapses.db"
+
+# NARE Activation
+activation_threshold: 0.65  # Weight threshold to publish intent
+teaching_window_ms: 500.0   # Hebbian teaching window (ms)
+heartbeat_interval_sec: 5.0 # Heartbeat interval (s)
+
+# Runtime Settings
+log_level: "INFO"           # DEBUG, INFO, WARNING, ERROR

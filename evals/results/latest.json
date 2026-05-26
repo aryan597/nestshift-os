@@ -1,0 +1,166 @@
+{
+  "energy_agent": {
+    "tests": 8,
+    "passed": 8,
+    "avg_latency_ms": 0.0953376293182373,
+    "scenarios": [
+      {
+        "scenario": "flat_tariff",
+        "passed": true,
+        "latency_ms": 0.13065338134765625,
+        "cost": 0.6
+      },
+      {
+        "scenario": "peak_tariff",
+        "passed": true,
+        "latency_ms": 0.10776519775390625,
+        "cost": 0.3,
+        "saved": 0.7
+      },
+      {
+        "scenario": "negative_pricing",
+        "passed": true,
+        "latency_ms": 0.12755393981933594,
+        "cost": -0.11250000000000002
+      },
+      {
+        "scenario": "volatile_tariff",
+        "passed": true,
+        "latency_ms": 0.17714500427246094
+      },
+      {
+        "scenario": "tight_flexibility",
+        "passed": true,
+        "latency_ms": 0.031232833862304688
+      },
+      {
+        "scenario": "hvac_safety_bounds",
+        "passed": true,
+        "latency_ms": 0.05078315734863281
+      },
+      {
+        "scenario": "multiple_devices_collision",
+        "passed": true,
+        "latency_ms": 0.10800361633300781
+      },
+      {
+        "scenario": "no_flexibility",
+        "passed": true,
+        "latency_ms": 0.02956390380859375
+      }
+    ]
+  },
+  "automation_agent": {
+    "tests": 5,
+    "passed": 5,
+    "avg_latency_ms": 6.201335144042969,
+    "scenarios": [
+      {
+        "scenario": "well_established_pattern",
+        "passed": true,
+        "latency_ms": 8.0,
+        "confidence": 1.0
+      },
+      {
+        "scenario": "novel_pattern",
+        "passed": true,
+        "latency_ms": 7.0,
+        "confidence": 0.0
+      },
+      {
+        "scenario": "low_confidence_blocks_action",
+        "passed": true,
+        "latency_ms": 6.0
+      },
+      {
+        "scenario": "weekend_vs_weekday",
+        "passed": true,
+        "latency_ms": 10.0
+      },
+      {
+        "scenario": "prediction_latency",
+        "passed": true,
+        "latency_ms": 0.00667572021484375
+      }
+    ]
+  },
+  "nare_brain": {
+    "tests": 5,
+    "passed": 5,
+    "avg_latency_ms": 1.8548839569091797,
+    "scenarios": [
+      {
+        "scenario": "synapse_weight_increase",
+        "passed": true,
+        "latency_ms": 1.5,
+        "final_weight": 0.22130613194252682
+      },
+      {
+        "scenario": "manual_override_hebbian",
+        "passed": true,
+        "latency_ms": 2.0,
+        "final_weight": 0.20410424993119497
+      },
+      {
+        "scenario": "neural_trace_fields",
+        "passed": true,
+        "latency_ms": 3.0
+      },
+      {
+        "scenario": "nare_never_publishes_devices",
+        "passed": true,
+        "latency_ms": 2.5
+      },
+      {
+        "scenario": "spike_latency",
+        "passed": true,
+        "latency_ms": 0.27441978454589844
+      }
+    ]
+  },
+  "pisafe": {
+    "tests": 6,
+    "passed": 6,
+    "avg_latency_ms": 1.4166666666666667,
+    "scenarios": [
+      {
+        "scenario": "hvac_max_temp",
+        "passed": true,
+        "latency_ms": 0.5
+      },
+      {
+        "scenario": "hvac_min_temp",
+        "passed": true,
+        "latency_ms": 0.5
+      },
+      {
+        "scenario": "high_power_limit",
+        "passed": true,
+        "latency_ms": 1.0,
+        "error": null
+      },
+      {
+        "scenario": "temperature_jump",
+        "passed": true,
+        "latency_ms": 0.5
+      },
+      {
+        "scenario": "oven_autonomous_inhibitory",
+        "passed": true,
+        "latency_ms": 1.0,
+        "error": null
+      },
+      {
+        "scenario": "safety_under_load",
+        "passed": true,
+        "latency_ms": 5.0,
+        "scenarios": {
+          "hvac_max": true,
+          "hvac_min": true,
+          "high_power": true
+        }
+      }
+    ]
+  },
+  "run_date": "2026-05-25"
+}
