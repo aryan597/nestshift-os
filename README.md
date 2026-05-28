@@ -215,5 +215,5 @@ Results are written to `simulation/results/`.
 ## Contributing
 
 NestShift is an ambitious project at the intersection of neuroscience and home automation. We welcome contributions to the NARE neural models, Pi-safe safety logic, and the digital twin simulation framework.
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20426804.svg)](https://doi.org/10.5281/zenodo.20426804)
 *Built with care by NestShift Ltd for a sustainable, intelligent future.*
