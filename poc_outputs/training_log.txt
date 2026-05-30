@@ -1,0 +1,60 @@
+======================================================================
+NESTSHIFT OS -- PROOF-OF-CONCEPT ENERGY AGENT TRAINER
+Innovator Founder Visa | Technical Demonstration
+======================================================================
+Start time: 2026-05-27T00:32:31.224467
+Output directory: E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs
+
+[DATA] Found extracted real sample: E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_data\LCL-Sample-2M.csv
+[DATA] Loaded 54,197 REAL records from Low Carbon London.
+[DATA] Date range: 2011-12-06 13:00:00 to 2012-02-04 13:00:00
+[DATA] Households: 20, Tariff mix: {'Std': 54197}
+[FEAT] Engineering features ...
+[FEAT] Backfilled then dropped 0 rows. Final: 54,197 rows.
+[TRAIN] Splitting train / validation / test (walk-forward) ...
+[TRAIN] Train: 40,673 | Validation: 6,384 | Test: 7,140
+[TRAIN] Training LightGBM with early stopping on validation set ...
+[TRAIN] Training complete in 0.6s. Best iter: 526
+[TRAIN] Training quantile regression model (alpha=0.9) for spike prediction ...
+[TRAIN] Q90 TEST -- MAE: 0.1605  R2: 0.8287
+[TRAIN] TRAIN   -- MAE: 0.0731  R2: 0.8969
+[TRAIN] VALID   -- MAE: 0.0906  R2: 0.8933
+[TRAIN] TEST    -- MAE: 0.1008  R2: 0.8921
+[TRAIN] Model saved: E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\model_demand_forecaster.pkl
+[TRAIN] Metrics saved: E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\validation_metrics.json
+[PLOT] Feature importance: E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\feature_importance.png
+[PLOT] Forecast overlay (TEST): E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\forecast_vs_actual_TEST.png
+[PLOT] Forecast overlay (VALIDATION): E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\forecast_vs_actual_VALIDATION.png
+[PLOT] Scatter plot (TEST): E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\scatter_actual_vs_pred_TEST.png
+[PLOT] Scatter plot (VALIDATION): E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\scatter_actual_vs_pred_VALIDATION.png
+[PLOT] Residuals (TEST): E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\residuals_TEST.png
+[PLOT] Residuals (VALIDATION): E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\residuals_VALIDATION.png
+[PLOT] Quantile comparison: E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\quantile_spike_comparison.png
+[OPT] Running energy schedule optimisation ...
+[OPT] Schedule saved: E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\energy_schedule.csv
+[OPT] Savings report saved: E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\cost_savings_report.json
+[OPT] Average cost saving: 26.43% per household
+[OPT] Projected annual saving: GBP 475.70/household
+
+======================================================================
+TRAINING COMPLETE
+======================================================================
+Model:             E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\model_demand_forecaster.pkl
+Metrics (JSON):    E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\validation_metrics.json
+Feature Plot:      E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\feature_importance.png
+Test Forecast:     E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\forecast_vs_actual_TEST.png
+Val Forecast:      E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\forecast_vs_actual_VALIDATION.png
+Test Scatter:      E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\scatter_actual_vs_pred_TEST.png
+Val Scatter:       E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\scatter_actual_vs_pred_VALIDATION.png
+Test Residuals:    E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\residuals_TEST.png
+Val Residuals:     E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\residuals_VALIDATION.png
+Schedule:          E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\energy_schedule.csv
+Savings Report:    E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\cost_savings_report.json
+Console Log:       E:\Projects\NestShift Ltd\os-image\nestshift-os\poc_outputs\training_log.txt
+
+TRAIN   MAE: 0.0731  R2: 0.8969
+VALID   MAE: 0.0906  R2: 0.8933
+TEST    MAE: 0.1008  R2: 0.8921
+Avg Saving:        26.43%
+Annual Saving:     GBP 475.70/household
+======================================================================

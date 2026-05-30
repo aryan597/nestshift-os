@@ -1,0 +1,33 @@
+{
+  "train": {
+    "MAE_kWh": 0.0731,
+    "RMSE_kWh": 0.1454,
+    "MAPE_percent": 73873.14,
+    "R2_score": 0.8969
+  },
+  "validation": {
+    "MAE_kWh": 0.0906,
+    "RMSE_kWh": 0.1765,
+    "MAPE_percent": 51847.17,
+    "R2_score": 0.8933
+  },
+  "test": {
+    "MAE_kWh": 0.1008,
+    "RMSE_kWh": 0.2094,
+    "MAPE_percent": 74221.7,
+    "R2_score": 0.8921
+  },
+  "quantile_q90_test": {
+    "MAE_kWh": 0.1605,
+    "RMSE_kWh": 0.2638,
+    "MAPE_percent": 138118.95,
+    "R2_score": 0.8287
+  },
+  "train_samples": 40673,
+  "validation_samples": 6384,
+  "test_samples": 7140,
+  "training_time_sec": 0.58,
+  "model_type": "LightGBM",
+  "best_iteration": 526,
+  "timestamp": "2026-05-27T00:32:35.388772"
+}

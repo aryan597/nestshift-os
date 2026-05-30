@@ -1,0 +1,22 @@
+{
+  "synapses": [
+    {
+      "pre": "sensors/motion/hallway",
+      "post": "nestshift/devices/light/hallway/command",
+      "weight": 0.15150146242745952
+    },
+    {
+      "pre": "sensors/motion/living_room",
+      "post": "nestshift/devices/light/living_room/command",
+      "weight": 0.09060058497098382
+    },
+    {
+      "pre": "sensors/temp/bedroom",
+      "post": "nestshift/devices/hvac/bedroom/command",
+      "weight": 0.05
+    }
+  ],
+  "autonomous_count": 0,
+  "learning_count": 3,
+  "simulation_events": 30
+}
