@@ -50,9 +50,7 @@ yarn-error.log*
 
 # Git
 .git/
-.gitignore
 .gitattributes
-.github/
 
 # Logs
 *.log
@@ -122,3 +120,27 @@ papers/version_a_conservative/preview-*.png
 
 # Simulation results (regenerable)
 simulation/results/*.png
+
+
+
+# Local-only archive (safety net)
+local-only/
+nestshift-os-local-only/
+
+# Large PDFs and confidential docs (managed outside repo)
+paper_main*.pdf
+prospectus/*.pdf
+NestShift_Hub_Enclosure_Brief.pdf
+
+# Social media drafts (not part of the product)
+linkedin_post.txt
+arxiv_endorsement_post.txt
+x_post.txt
+linkedin_infographic.png
+
+# Research artifacts (kept in local archive)
+experiment.md
+experiment_driver.py
+TODO.md
+RUN.md
+NOVA_PRIME_CONTEXT.md

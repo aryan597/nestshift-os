@@ -1,221 +1,167 @@
-# NestShift OS: Neural Autonomous Residential Engine (NARE)
+# NestShift OS
 
-## The Vision
+> A local-first, edge AI operating system for the home. Learns your patterns. Runs entirely offline. No cloud, no subscriptions, no surveillance.
 
-**NestShift OS** is a premium, edge-first operating system designed to transform residential spaces into truly autonomous environments. Unlike traditional smart home hubs that rely on rigid "if-this-then-that" rules, NestShift utilizes a **Synthetic Neural Core** that learns and adapts organically to user behavior and energy markets.
+<!-- TODO: Add hero screenshot here — 1200x600px, dark UI with neon accents -->
+<!-- Place image at: docs/screenshots/dashboard-hero.png -->
 
----
-
-## Core Pillars
-
-### 1. Neural Brain (NARE)
-
-The heart of NestShift is the **Neural Autonomous Residential Engine**. It uses **Leaky Integrate-and-Fire (LIF)** neuron models and **Hebbian Learning (STDP)** to form synapses between sensors and devices.
-
-- **Learning**: "Neurons that fire together, wire together." If you manually turn on a light after a motion sensor fires, the Brain strengthens that connection.
-- **Autonomy**: Once a synapse is strong enough, the Brain takes the action for you.
-- **Explainability**: Every action has a "Neural Trace" explaining the trigger and synapse strength.
-
-### 2. Safety and Integrity (Pi-safe)
-
-Security is immutable. No AI agent or user command can bypass the **Pi-safe** hardware filter.
-
-- **Hard Clamps**: HVAC is strictly capped at 16-26 degrees Celsius.
-- **Grid Protection**: Maximum of 3 high-power devices (greater than 1000W) can run simultaneously.
-- **Sensor Coherence**: Detects and ignores "impossible" sensor jumps (e.g., temperature spiking 10 degrees in one second).
-- **Inhibitory Control**: Critical appliances (ovens, stoves) are inhibited from autonomous activation.
-
-### 3. Edge Intelligence (Agents)
-
-Specialized Python agents handle complex optimization tasks entirely on-device:
-
-- **Energy Agent**: Uses **LightGBM** to forecast demand and integrates with **Octopus Agile** for real-time tariff optimization.
-- **Automation Agent**: Learned behavior pattern recognition with probabilistic confidence scoring.
-- **System Agent**: Monitors hardware health and detects **AI Model Drift** to trigger automatic retraining.
-
-### 4. OrbitAI Dashboard
-
-A high-end, glassmorphism-based UI built with **React + Vite**.
-
-- **Premium Aesthetic**: Deep blacks, neon cyan/green accents, and thin glowing borders.
-- **Onboarding Wizard**: Native flow for Wi-Fi setup, mobile pairing, and hardware mapping.
-- **Real-time Telemetry**: Live energy rhythm charts and interactive comfort-cost dials.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Node 18+](https://img.shields.io/badge/node-18+-green.svg)](https://nodejs.org/)
 
 ---
 
-## AI Architecture
+## What is it?
 
-NestShift OS implements an LLM-orchestrated pipeline architecture - the same engineering principles used in enterprise AI systems (RAG pipelines, agentic systems, structured extraction), applied to home automation.
+**NestShift OS** turns a Raspberry Pi into a truly autonomous home brain. Unlike smart home hubs that rely on rigid "if-this-then-that" rules, NestShift uses a neural core that learns from your behavior and anticipates what you need — all without sending a single byte to the cloud.
 
-### Pipeline Stages
+It runs every AI model locally: voice recognition, energy forecasting, behavioral learning, and safety filtering. Your data stays in your house. Period.
 
-1. **Sensor Data Ingestion Layer**
-   - MQTT subscription to all device topics (`nestshift/devices/#`, `nestshift/sensors/#`)
-   - Real-time time-series storage in InfluxDB
-   - Data normalization and feature engineering at 1-minute resolution
+---
 
-2. **Semantic Understanding and Intent Extraction**
-   - Voice commands processed through **Whisper Small** for on-device ASR
-   - Contextual intent extraction combining recent sensor state plus user history
-   - Safety filter validation before any action reaches the decision engine
+## Features
 
-3. **Local AI Decision Engine**
-   - **RL Agent**: BehaviourModel learns household patterns by recording device actions per hour-of-day. Confidence threshold determines when to act autonomously.
-   - **Rule Fusion**: Safety filter (Pi-safe) provides immutable hardware constraints that no AI can bypass - HVAC temperature bounds, concurrent high-power device limits
-   - Drift detection via SystemAgent monitors prediction error rates and triggers model retraining
+| Feature | What it does |
+|---|---|
+| 🧠 **Neural Brain (NARE)** | Spiking neural network with Hebbian learning that forms synapses between your sensors and devices. The more you use it, the smarter it gets. |
+| ⚡ **Energy Optimisation** | LightGBM forecasts your demand and shifts high-power loads to the cheapest tariff windows — 9–13% savings demonstrated. |
+| 🔒 **Pi-safe Hardware Filter** | Immutable safety constraints. No AI, voice command, or bug can override hard limits on temperature, wattage, or high-power concurrency. |
+| 🎙️ **Local Voice Control** | Whisper Small runs on-device. Speak naturally. No cloud ASR, no wake-word phoning home. |
+| 🖥️ **OrbitAI Dashboard** | Glassmorphism React UI with real-time telemetry, neural traces, and energy rhythm charts. Deep blacks, neon cyan accents, zero clutter. |
+| 📊 **Drift-aware MLOps** | SystemAgent monitors prediction quality and triggers automatic retraining when your habits change. |
 
-4. **Structured Output Layer**
-   - Device commands serialized as validated JSON
-   - Action schemas: `{ device_id, action, params, rule_validated, safety_clamped }`
-   - Published to MQTT for device execution
+<!-- TODO: Add 3–4 screenshot thumbnails here -->
+<!-- docs/screenshots/brain-panel.png — NARE neuron activity -->
+<!-- docs/screenshots/energy-panel.png — Live cost & savings chart -->
+<!-- docs/screenshots/safety-panel.png — Pi-safe constraint monitor -->
 
-5. **Monitoring and Observability**
-   - All agent decisions logged to InfluxDB for downstream analytics
-   - Health topics published every 60 seconds per agent
-   - SystemAgent aggregates drift status and model freshness
+---
+
+## Quick Start
+
+### Preview the Dashboard (mock mode)
+
+```bash
+git clone https://github.com/aryan597/nestshift-os.git
+cd nestshift-os/dashboard
+npm install
+npm run dev
+# Open http://localhost:5173
+```
+
+### Run a single service locally
+
+```bash
+cd services/brain
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python main.py
+```
+
+### Full install on Raspberry Pi 4/5
+
+```bash
+curl -sSL https://raw.githubusercontent.com/aryan597/nestshift-os/main/scripts/install.sh | bash
+```
+
+> **Note:** Full stack deployment requires Mosquitto MQTT, InfluxDB, and Zigbee2MQTT. See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed service topology.
 
 ---
 
 ## System Architecture
 
-```mermaid
-graph TD
-    UI[OrbitAI Dashboard - React] <--> API[FastAPI Gateway]
-    API <--> MQTT[Mosquitto TLS Broker]
-    
-    subgraph "Neural Core"
-        Brain[NARE Brain - LIF Neurons]
-    end
-    
-    subgraph "AI Agents"
-        EA[Energy Agent - LightGBM]
-        AA[Automation Agent - Patterns]
-        SA[System Agent - Monitoring]
-    end
-    
-    subgraph "Hardware Layer"
-        GPIO[GPIO Service]
-        ZB[Zigbee2MQTT]
-    end
-    
-    MQTT <--> Brain
-    MQTT <--> EA
-    MQTT <--> AA
-    MQTT <--> SA
-    MQTT <--> GPIO
-    MQTT <--> ZB
-    
-    SA --> TS[InfluxDB Telemetry]
-    API --> DB[SQLite Config]
 ```
+┌─────────────────┐      ┌──────────────┐      ┌─────────────────┐
+│  OrbitAI Dashboard │◄────►│  FastAPI      │◄────►│  Mosquitto MQTT │
+│   (React + Vite)   │      │   Gateway     │      │    (TLS)        │
+└─────────────────┘      └──────────────┘      └─────────────────┘
+                                                        │
+       ┌──────────────┬──────────────┬─────────────────┼─────────────────┐
+       ▼              ▼              ▼                 ▼                 ▼
+┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐
+│   Brain    │ │  Energy    │ │ Automation │ │   System   │ │   Zigbee   │
+│  (NARE)    │ │   Agent    │ │   Agent    │ │   Agent    │ │  / GPIO    │
+└────────────┘ └────────────┘ └────────────┘ └────────────┘ └────────────┘
+```
+
+- **NARE Brain** — LIF spiking neurons + STDP learning
+- **Energy Agent** — LightGBM demand forecasting + Octopus Agile tariff arbitrage
+- **Automation Agent** — Hourly behavior pattern mining with confidence scoring
+- **System Agent** — Drift detection, model freshness, hardware health
+- **Pi-safe** — Immutable safety filter between all agents and physical hardware
+
+Read the full architecture: [ARCHITECTURE.md](./ARCHITECTURE.md)
 
 ---
 
 ## Hardware Stack
 
-- **Raspberry Pi 5** - Primary compute platform (4GB or greater recommended)
-- **Shelly 1PM** - WiFi relays with power monitoring
-- **Danfoss Ally Zigbee TRVs** - Radiator temperature control
-- **Aqara Sensors** - Temperature, humidity, motion, door/window
-- **CT Clamp** - Non-invasive load monitoring for NILM
-
----
-
-## Getting Started
-
-### Development Mode (Docker)
-
-```bash
-# Clone the repository
-git clone https://github.com/aryan597/nestshift-os.git
-cd nestshift-os
-
-# Start the complete stack
-docker-compose -f dev/docker-compose.dev.yml up -d
-
-# Access the dashboard
-# Open http://localhost:8000
-```
-
-### Production OS Build
-
-NestShift is designed to run as a custom OS on Raspberry Pi 4/5.
-
-```bash
-# Build the custom OS image (requires Linux)
-cd os/
-./scripts/build-vm.sh
-```
-
-### Running Tests
-
-```bash
-pip install -r tests/requirements.txt
-pytest tests/ -v
-```
+| Component | Purpose |
+|---|---|
+| **Raspberry Pi 5** (4GB+) | Primary compute |
+| **Shelly 1PM** | WiFi relays + power monitoring |
+| **Danfoss Ally TRV** | Zigbee radiator valves |
+| **Aqara Sensors** | Temp, humidity, motion, door/window |
+| **CT Clamp** | Whole-home energy monitoring (NILM) |
 
 ---
 
 ## Project Structure
 
 ```
-nestshift-github-ready/
-├── dashboard/          # React web interface (OrbitAI aesthetic)
-├── services/           # Microservices
-│   ├── api/           # FastAPI Gateway
-│   ├── brain/         # NARE Neural Core
-│   ├── energy-agent/  # LightGBM plus Octopus
-│   ├── automation-agent/ # Behaviour Learning
-│   ├── system-agent/  # Monitoring plus Drift
-│   ├── gpio/          # Raspberry Pi GPIO
-│   ├── zigbee/        # Zigbee2MQTT
-│   ├── mqtt/          # Mosquitto Broker
-│   └── influxdb/      # Time-series DB
-├── config/            # GPIO and Node-RED config
-├── board/             # Buildroot overlay
-├── scripts/           # Installation and flashing
-├── systemd/           # Systemd units
-└── tests/             # Safety and logic tests
+nestshift-os/
+├── dashboard/          # React + Vite OrbitAI UI
+├── services/           # Microservices (FastAPI + asyncio)
+│   ├── api/            # REST gateway & auth
+│   ├── brain/          # NARE neural core
+│   ├── energy-agent/   # Demand forecasting & tariff logic
+│   ├── automation-agent/  # Behavioral pattern learning
+│   ├── system-agent/   # Drift detection & monitoring
+│   ├── gpio/           # Raspberry Pi hardware interface
+│   └── zigbee/         # Zigbee2MQTT bridge
+├── board/              # Buildroot OS overlay
+├── config/             # Hardware & neural config
+├── scripts/            # Installation & flashing helpers
+├── simulation/         # Digital twin evaluation framework
+├── tests/              # Safety & logic test suite
+└── systemd/            # Production service units
 ```
 
 ---
 
-## Security and Privacy
+## Security & Privacy
 
-- **Local-First**: 100 percent of data and processing stays in your home.
-- **Encrypted**: All MQTT traffic uses TLS.
-- **Authenticated**: REST API endpoints protected by JWT tokens.
-- **Safe**: Hardware-level constraints are hardcoded and immutable (Pi-safe).
+- **Local-first**: 100% of inference and data stays on your Pi. No cloud APIs, no telemetry, no outbound analytics.
+- **Encrypted transport**: All MQTT traffic uses TLS. JWT auth on REST endpoints.
+- **Immutable safety**: Pi-safe constraints are hardcoded. No prompt injection, voice spoof, or model drift can disable them.
+- **Camera-free**: Optional WiFi CSI sensing (RuView) for through-wall occupancy without cameras or wearables.
 
 ---
 
-## Research and Publications
+## Research
 
-This repository includes a complete digital twin simulation framework and two academic paper drafts derived from the NestShift architecture.
+NestShift OS is the product of active research in edge AI and residential energy optimisation.
 
-### Papers
+- **Energy optimisation**: 9–13% cost reduction across dynamic tariffs (see [RESEARCH.md](./RESEARCH.md))
+- **Solar self-consumption**: 12–38% savings for solar-equipped households
+- **Digital twin**: Reproducible Monte Carlo simulation framework included in `simulation/`
 
-- **`papers/version_a_conservative/`** — *A Multi-Agent, Local-First Edge AI Architecture for Autonomous Residential Energy Optimisation Under Dynamic Tariffs*. Conservative structure close to the original draft. Demonstrates 9–13% cost reduction across four tariff scenarios.
-- **`papers/version_b_solar/`** — *SolarShift: A Local-First Edge AI Architecture for Solar Self-Consumption and Dynamic Tariff Arbitrage*. Higher-impact reframing with a Solar Forecasting Agent. Projects 12–38% savings for solar-equipped households.
+Read the full research background: [RESEARCH.md](./RESEARCH.md)
 
-### Simulation Framework
-
-The `simulation/` directory contains a reproducible digital twin for evaluating multi-agent energy optimisation:
-
-```bash
-cd simulation/
-python3 run_experiments.py          # Main Monte Carlo suite (4 tariffs × 4 controllers × 20 runs)
-python3 analysis_learning_curve.py  # 90-day convergence analysis
-python3 analysis_sensitivity.py     # Comfort-cost (λ) and risk (β) sweeps
-python3 analysis_drift.py           # Behavioral drift detection scenario
-```
-
-Results are written to `simulation/results/`.
+---
 
 ## Contributing
 
-NestShift is an ambitious project at the intersection of neuroscience and home automation. We welcome contributions to the NARE neural models, Pi-safe safety logic, and the digital twin simulation framework.
+NestShift sits at the intersection of neuroscience, embedded systems, and home automation. We're actively looking for contributors in:
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20426804.svg)](https://doi.org/10.5281/zenodo.20426804)
+- Spiking neural networks (snnTorch / Norse)
+- Embedded ML & ONNX Runtime on ARM64
+- Zigbee / Matter device integrations
+- Safety-critical systems verification
 
-*Built with care by NestShift Ltd for a sustainable, intelligent future.*
+Open an issue or draft PR. All contributions are reviewed through the Pi-safe lens: *safety first, features second.*
+
+---
+
+*Built by NestShift Ltd for a sustainable, intelligent future.*
