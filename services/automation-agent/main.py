@@ -27,7 +27,10 @@ class BehaviourModel:
         self.total_events = 0
 
     def record_event(self, device_id, action, timestamp):
-        hour = datetime.fromisoformat(timestamp).hour
+        if isinstance(timestamp, datetime):
+            hour = timestamp.hour
+        else:
+            hour = datetime.fromisoformat(timestamp).hour
         if hour not in self.patterns:
             self.patterns[hour] = {}
         if device_id not in self.patterns[hour]:
@@ -72,24 +75,31 @@ class BehaviourModel:
 
 class RuleEngine:
     def validate_action(self, action, system_state):
-        device_id = action["device_id"]
-        action_type = action["action"]
+        device_id = action.get("device_id")
+        action_type = action.get("action")
+        params = action.get("params", {})
         device = system_state.get("devices", {}).get(device_id, {})
+        occupancy = system_state.get("occupancy", {})
+        occupied = (
+            occupancy if isinstance(occupancy, bool) else occupancy.get("occupied", False)
+        )
 
         # Rule 1: Never turn off security devices if occupied
         if action_type in ["turn_off", "disable"] and device.get("type") in [
             "security",
             "alarm",
         ]:
-            if system_state.get("occupancy", {}).get("occupied", False):
+            if occupied:
                 logger.warning(
                     f"Blocked {action_type} of security device {device_id} due to occupancy"
                 )
                 return False
 
         # Rule 2: Never set HVAC outside 16-26°C
-        if device.get("type") == "hvac" and "setpoint" in action:
-            setpoint = action["setpoint"]
+        setpoint = action.get("setpoint", params.get("temperature"))
+        if setpoint is not None and (
+            device.get("type") == "hvac" or action_type == "set_temperature"
+        ):
             if not 16 <= setpoint <= 26:
                 logger.warning(
                     f"Blocked HVAC setpoint {setpoint}°C for {device_id} - outside safe range"

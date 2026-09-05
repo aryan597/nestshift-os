@@ -1,7 +1,6 @@
-import sys
+from conftest import load_service_module
 
-sys.path.insert(0, "services/system-agent")
-from main import DriftDetector
+DriftDetector = load_service_module("system-agent").DriftDetector
 
 
 def test_no_drift_below_threshold():
