@@ -21,7 +21,13 @@ app = FastAPI()
 # NestShift OS Part 5 — Security
 
 # JWT token system
-SECRET_KEY = os.getenv("JWT_SECRET", "dev-secret-change-in-prod")
+SECRET_KEY = os.getenv("JWT_SECRET")
+if not SECRET_KEY:
+    if os.getenv("NESTSHIFT_ENV", "development") == "production":
+        raise RuntimeError(
+            "JWT_SECRET must be set when NESTSHIFT_ENV=production"
+        )
+    SECRET_KEY = "dev-secret-change-in-prod"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 hours
 

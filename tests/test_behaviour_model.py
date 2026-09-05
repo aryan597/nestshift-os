@@ -1,8 +1,10 @@
-import sys
 from datetime import datetime, timedelta
 
-sys.path.insert(0, "services/automation-agent")
-from main import BehaviourModel
+from conftest import load_service_module
+
+automation_agent = load_service_module("automation-agent")
+BehaviourModel = automation_agent.BehaviourModel
+RuleEngine = automation_agent.RuleEngine
 
 
 def test_cold_start_confidence_zero():
@@ -24,8 +26,6 @@ def test_no_prediction_below_confidence_threshold():
 
 
 def test_rule_engine_blocks_dangerous_hvac():
-    from main import RuleEngine
-
     re = RuleEngine()
     action = {"action": "set_temperature", "params": {"temperature": 40}}
     state = {"occupancy": False, "devices": {}}
